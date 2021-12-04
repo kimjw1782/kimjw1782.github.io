@@ -1,0 +1,73 @@
+!<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Shape Snake</title>
+  
+	<style>
+		body {background-color: #F1f1f1;overflow: hidden;text-align:center;display: flex;align-items: center;justify-content: center; }
+		body,html {height: 100%;width: 100%;margin: 0;padding: 0;}
+		svg {width: 100%;height: 100%;visibility: hidden;}
+		#allBoxes rect:nth-child(3) {fill: #F2F230;}
+		#allBoxes rect:nth-child(4) {fill: #C2F261;}
+		#allBoxes rect:nth-child(5) {fill: #91F291;}
+		#allBoxes rect:nth-child(6) {fill: #61F2C2;}
+		#allBoxes rect:nth-child(2) {fill: #F4CC2D;}
+		#allBoxes rect:nth-child(1) {fill: #FAA027;}
+	</style>
+
+</head>
+
+<body>
+	<svg id="mainSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <defs>
+	  <g id="allBoxes">
+        <rect x="62.92" y="231.96" width="100" height="100"/>
+        <rect x="185.14" y="231.96" width="100" height="100" rx="50"/>
+        <rect x="305.14" y="231.96" width="100" height="100"/>
+        <rect x="425.14" y="231.96" width="100" height="100" rx="50"/>
+        <rect x="545.14" y="231.96" width="100" height="100"/>
+        <rect x="665.14" y="231.96" width="100" height="100" rx="50"/>
+      </g>
+	</defs>
+	
+	<use xlink:href="#allBoxes" />
+	<g id="ref" >
+	<use xlink:href="#allBoxes" x="-0" y="100" opacity="0.1"/>
+	</g>
+	</svg>
+<!-- partial -->
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.1/gsap.min.js'></script>
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/ScrubGSAPTimeline_3_0.js'></script>
+<script>
+
+	let select = s => document.querySelector(s),
+	selectAll = s =>  document.querySelectorAll(s),
+	mainSVG = select('#mainSVG')
+
+	gsap.set('svg', {
+		visibility: 'visible'
+	})
+
+	let tl = gsap.timeline({repeat: -1});
+	tl.to('#allBoxes rect', {
+		transformOrigin: '107% 50%',
+		rotation: gsap.utils.wrap([180, -180]),
+		stagger: {
+			each: 0.14,
+		}
+	})
+	.to('#allBoxes', {
+		x: -112,
+		duration: tl.recent().duration(),
+		ease: 'linear'
+	}, 0)
+
+	gsap.set('#ref', {
+		scaleY: -1,
+		transformOrigin: '50% 50%'
+	})
+</script>
+</body>
+</html>
